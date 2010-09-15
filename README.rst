@@ -1,8 +1,11 @@
+.. figure:: http://github.com/pointtonull/pyunwrap/raw/master/compose.png
+   :align: right
+
 Description
 ===========
 
-PyUnwrap is a efficient wave unwrapper with a simple
-python/mayavi2 interface.
+PyUnwrap is a very efficient phase unwrapper with a nice python/mayavi2
+interface.
 
 Colaborate
 ========
