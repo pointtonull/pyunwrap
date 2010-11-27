@@ -10,5 +10,5 @@ interface.
 Colaborate
 ========
 
-You are free to clone this project from http://github.com/pointtonull/pyunwrap.git
+You are free to clone this project from http://github.com/pointtonull/pyunwrap
 or to report issues/whises on http://github.com/pointtonull/pyunwrap/issues
