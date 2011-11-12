@@ -40,13 +40,20 @@ def unwrap_image(image, postblur=0, mirrored=True):
     if issubclass(type(image), basestring):
         image = Image.open(image)
 
-
 #    image = image.convert("L")
 
-    array = numpy.array(image, float)
-    debug("Min: %8.6f Max: %8.6f" % (array.min(), array.max()))
+    canvas = False
+    frame = 0
+    while not canvas:
+        array = numpy.array(image, float)
+        debug("Min: %8.6f Max: %8.6f" % (array.min(), array.max()))
 
-    width, height = array.shape
+        if not array.shape:
+            frame += 1
+            image.seek(frame)
+        else:
+            width, height = array.shape
+            canvas = True
 
     if array.max() > pi:
         debug("Not in pi scale")
