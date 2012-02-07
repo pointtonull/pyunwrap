@@ -11,6 +11,7 @@ class Tkpipe(Frame):
         self.grid(stick="nsew")
         self.createWidgets()
         self.label = label
+        self.closed = False
 
 
     def createWidgets(self):
@@ -55,8 +56,10 @@ class Tkpipe(Frame):
 
 
     def close(self):
-        self.write("\n-----\nProcess ended\n", "blue")
-        self.mainloop()
+        if not self.closed:
+            self.write("\n-----\nProcess ended\n", "blue")
+            self.closed = True
+            self.mainloop()
 
 
     def default(self, tagname):
@@ -91,3 +94,6 @@ class ColoredPipe:
 
     def close(self):
         self.pipe.close()
+
+    def __del__(self, *args):
+        self.pipe.__del__(*args)
