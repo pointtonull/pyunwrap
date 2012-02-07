@@ -87,9 +87,9 @@ class Interface(Frame):
 
 def main():
     "The main routine"
+    git_path = get_paths("git")[0]
     gui = Interface()
     gui.put_line("Feching last version")
-    git_path = get_paths("git")[0]
     commands = ("fetch", "stash", "rebase")
     for command in commands:
         proc = Popen([git_path, command], stdout=PIPE)
