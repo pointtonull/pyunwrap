@@ -112,7 +112,7 @@ class Interface(Frame):
 
 def main():
     "The main routine"
-    if os.name in ("nt"):
+    if os.name in ("nt", "posix"):
         sys.stdout = Interface()
         sys.stderr = sys.stdout
     git_path = get_paths("git")[0]
