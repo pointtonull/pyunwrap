@@ -91,7 +91,3 @@ class ColoredPipe:
 
     def close(self):
         self.pipe.close()
-
-
-    def __del__(self, *args):
-        self.close()
