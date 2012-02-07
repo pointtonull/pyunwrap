@@ -92,26 +92,35 @@ class Interface(Frame):
         self.update()
 
 
-    def put_line(self, line):
+    def write(self, line):
         self.txt_messages.insert("end", line)
         self.txt_messages.see("end")
         self.txt_messages.update()
+
+    def writelines(self, iterable):
+        for line in iterable:
+            self.write(line)
+
+    def flush(self):
+        self.update()
+
+    def close(self):
+        self.mainloop()
 
 
 
 
 def main():
     "The main routine"
+    if os.name is in ("nt"):
+        sys.stdout = Interface()
     git_path = get_paths("git")[0]
-    gui = Interface()
-    gui.put_line("Feching last version")
+    print("Feching last version\n")
     commands = ("fetch", "stash", "rebase")
     for command in commands:
         proc = Popen([git_path, command], stdout=PIPE)
         for line in iter(proc.stdout.readline, ''):
-               gui.put_line(line)
-    gui.mainloop()
-
+               print("    " + line)
 
 
 if __name__ == "__main__":
