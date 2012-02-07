@@ -8,9 +8,10 @@ este último donde es más probable que el entorno esté incompleto o
 desactualizado.
 """
 
-from subprocess import Popen, PIPE
 from src import autopipe
 from src.executables import get_paths
+from subprocess import Popen, PIPE
+import sys
 
 def main():
     "The main routine"
@@ -20,7 +21,7 @@ def main():
         [git_path, "stash"],
         [git_path, "rebase", "-v"])
     for command in commands:
-        proc = Popen(command)
+        proc = Popen(command, stdout=sys.stdout, stderr=sys.stdin)
 
 #        for line in iter(proc.stdout.readline, ''):
 #            print("    " + line)
