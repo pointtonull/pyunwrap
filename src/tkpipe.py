@@ -94,4 +94,4 @@ class ColoredPipe:
 
 
     def __del__(self, *args):
-        self.pipe.__del__(*args)
+        self.close()
