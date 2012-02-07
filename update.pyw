@@ -39,7 +39,7 @@ def main():
 
     for command in commands:
         proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
-            close_fds=False)
+            close_fds=False, startupinfo=info)
 
         stdout_queue = Queue()
         stdout = Thread(target=enqueue_output, args=(proc.stdout, stdout_queue))
