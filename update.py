@@ -93,7 +93,7 @@ class Interface(Frame):
 
 
     def write(self, line):
-        self.txt_messages.insert("end", line)
+        self.txt_messages.insert("end", line, color="red")
         self.txt_messages.see("end")
         self.txt_messages.update()
 
