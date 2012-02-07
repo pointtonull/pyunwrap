@@ -20,9 +20,12 @@ def main():
         [git_path, "stash"],
         [git_path, "rebase", "-v"])
     for command in commands:
-        proc = Popen(command, stdout=PIPE)
-        for line in iter(proc.stdout.readline, ''):
-            print("    " + line)
+        proc = Popen(command)
+
+#        for line in iter(proc.stdout.readline, ''):
+#            print("    " + line)
+
+        proc.wait()
 
 
 if __name__ == "__main__":
