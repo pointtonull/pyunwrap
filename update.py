@@ -60,11 +60,13 @@ LOG = lambda string: write(string, LOG_FILE)
 
 
 class Interface(Frame):
-    def __init__(self, master=None):
-        Frame.__init__(self, master)
-        self.master.title("Sample application")
+
+    def __init__(self, title="Standard output", label="Propram progress"):
+        Frame.__init__(self)
+        self.master.title(title)
         self.grid(stick="nsew")
         self.createWidgets()
+        self.label = label
 
 
     def createWidgets(self):
