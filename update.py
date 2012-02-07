@@ -114,6 +114,7 @@ def main():
     "The main routine"
     if os.name is in ("nt"):
         sys.stdout = Interface()
+        sys.stderr = sys.stdout
     git_path = get_paths("git")[0]
     print("Feching last version\n")
     commands = ("fetch", "stash", "rebase")
