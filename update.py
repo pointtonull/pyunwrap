@@ -9,119 +9,20 @@ desactualizado.
 """
 
 from subprocess import Popen, PIPE
-import os
-import sys
-from Tkinter import Button, Frame, Label, Text
-
-APP_NAME = "update"
-if os.name in ("posix"):
-    HAPP_NAME = "." + APP_NAME
-else:
-    HAPP_NAME = "" + APP_NAME
-
-LOG_FILE = os.path.expanduser("~/%s.log" % (HAPP_NAME))
-VERBOSE = 20
-
-
-def get_paths(command):
-    """
-    return a list of the abspath to executables of <command> except this file
-    """
-    try:
-        my_path = os.path.realpath(__file__)
-    except:
-        my_path = None
-
-    posibles = {
-        "posix" : ["%s"],
-        "nt" : ["%s.exe", "%s.cmd", "%s.com", "%s.bat"]
-        }[os.name]
-    posibles = [pos % command for pos in posibles]
-
-    paths = []
-    for command in posibles:
-        paths += [os.path.realpath(os.path.join(path, command))
-            for path in os.environ["PATH"].split(os.pathsep)
-                if os.path.exists(os.path.join(path, command))]
-    paths = [path for path in paths if path != my_path]
-    return paths
-
-
-def write(text, destination):
-    """
-    Shortcut to append text to destination and flush
-    """
-    DEBUG("""write::writing "%s" to %s""" % (text, destination))
-    fileo = open(destination, "a")
-    fileo.write("%s\n" % text.encode("UTF-8", "replace"))
-    fileo.close()
-
-LOG = lambda string: write(string, LOG_FILE)
-
-
-class Interface(Frame):
-
-    def __init__(self, title="Standard output", label="Propram progress"):
-        Frame.__init__(self)
-        self.master.title(title)
-        self.grid(stick="nsew")
-        self.createWidgets()
-        self.label = label
-
-
-    def createWidgets(self):
-        top = self.winfo_toplevel()
-
-        top.rowconfigure(0, weight=1, minsize=96)
-        top.columnconfigure(0, weight=1)
-
-        self.columnconfigure(0, weight=1)
-
-        self.rowconfigure(0, minsize=24)
-        self.lbl_pretext = Label(self, text="Update progress:")
-        self.lbl_pretext.grid(row=0, sticky="nwsw")
-
-        self.rowconfigure(1, minsize=48, weight=1)
-        self.txt_messages = Text(self)
-        self.txt_messages.grid(row=1, sticky="nsew")
-
-        self.rowconfigure(2, minsize=24)
-        self.btn_quit = Button(self, text="Quit", command=self.quit)
-        self.btn_quit.grid(row=2, sticky="ew")
-
-        self.update()
-
-
-    def write(self, line):
-        self.txt_messages.insert("end", line, color="red")
-        self.txt_messages.see("end")
-        self.txt_messages.update()
-
-    def writelines(self, iterable):
-        for line in iterable:
-            self.write(line)
-
-    def flush(self):
-        self.update()
-
-    def close(self):
-        self.mainloop()
-
-
-
+from src import autopipe
+from src.executables import get_paths
 
 def main():
     "The main routine"
-    if os.name in ("nt", "posix"):
-        sys.stdout = Interface()
-        sys.stderr = sys.stdout
     git_path = get_paths("git")[0]
     print("Feching last version\n")
-    commands = ("fetch", "stash", "rebase")
+    commands = ([git_path, "fetch", "-v"],
+        [git_path, "stash", "-v"],
+        [git_path, "rebase", "-v"])
     for command in commands:
-        proc = Popen([git_path, command], stdout=PIPE)
+        proc = Popen(command, stdout=PIPE)
         for line in iter(proc.stdout.readline, ''):
-               print("    " + line)
+            print("    " + line)
 
 
 if __name__ == "__main__":
