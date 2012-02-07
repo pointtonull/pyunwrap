@@ -11,11 +11,11 @@ desactualizado.
 from Queue import Queue, Empty
 from src import autopipe
 from src.executables import get_paths
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STARTUPINFO, SW_HIDE, STARTF_USESHOWWINDOW
 from threading  import Thread
 import sys
 
-ON_POSIX = 'posix' in sys.builtin_module_names
+assert 'posix' not in sys.builtin_module_names
 
 
 def enqueue_output(out, queue):
@@ -33,9 +33,13 @@ def main():
         [git_path, "rebase", "-v"]
     )
 
+    info = STARTUPINFO()
+    info.dwFlags |= STARTF_USESHOWWINDOW
+    info.wShowWindow = SW_HIDE
+
     for command in commands:
         proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
-            close_fds=ON_POSIX, shell=True)
+            close_fds=False)
 
         stdout_queue = Queue()
         stdout = Thread(target=enqueue_output, args=(proc.stdout, stdout_queue))
