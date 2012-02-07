@@ -8,25 +8,58 @@ este último donde es más probable que el entorno esté incompleto o
 desactualizado.
 """
 
+from Queue import Queue, Empty
 from src import autopipe
 from src.executables import get_paths
 from subprocess import Popen, PIPE
+from threading  import Thread
 import sys
+
+ON_POSIX = 'posix' in sys.builtin_module_names
+
+
+def enqueue_output(out, queue):
+    for line in iter(out.readline, ''):
+        queue.put(line)
+    out.close()
+
 
 def main():
     "The main routine"
     git_path = get_paths("git")[0]
-    print("Feching last version\n")
     commands = ([git_path, "fetch", "-v"],
         [git_path, "stash"],
         [git_path, "rebase", "-v"])
+
     for command in commands:
-        proc = Popen(command, stdout=sys.stdout, stderr=sys.stdin)
+        proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
+            close_fds=ON_POSIX)
 
-#        for line in iter(proc.stdout.readline, ''):
-#            print("    " + line)
+        stdout_queue = Queue()
+        stdout = Thread(target=enqueue_output, args=(proc.stdout, stdout_queue))
+        stdout.daemon = True
+        stdout.start()
 
-        proc.wait()
+        stderr_queue = Queue()
+        stderr = Thread(target=enqueue_output, args=(proc.stderr, stderr_queue))
+        stderr.daemon = True
+        stderr.start()
+
+        while proc.poll() is None:
+
+            try:
+                line = stdout_queue.get_nowait()
+            except Empty:
+                pass
+            else:
+                sys.stdout.write(line)
+
+            try:
+                line = stderr_queue.get_nowait()
+            except Empty:
+                pass
+            else:
+                sys.stderr.write(line)
 
 
 if __name__ == "__main__":

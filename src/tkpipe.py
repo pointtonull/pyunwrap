@@ -72,8 +72,14 @@ class ColoredPipe:
         self.pipe = pipe
         self.default_tag = tag
 
+
+    def default(self, tagname):
+        return ColoredPipe(self.pipe, tagname)
+
+
     def write(self, string, tag=None):
         self.pipe.write(string, tag or self.default_tag)
+
 
     def writelines(self, iterable, tag=None):
         for line in iterable:
@@ -84,6 +90,7 @@ class ColoredPipe:
 
     def close(self):
         self.pipe.close()
+
 
     def __del__(self, *args):
         self.pipe.__del__(*args)
