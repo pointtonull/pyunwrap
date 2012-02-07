@@ -29,7 +29,7 @@ def get_paths(command):
     """
     my_path = os.path.realpath(__file__)
     paths = (os.path.realpath(os.path.join(path, command))
-        for path in os.environ["PATH"].split(":")
+        for path in os.environ["PATH"].split(os.pathsep)
             if os.path.exists(os.path.join(path, command)))
     paths = [path for path in paths if path != my_path]
     return paths
