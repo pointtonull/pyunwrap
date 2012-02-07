@@ -17,7 +17,7 @@ def main():
     git_path = get_paths("git")[0]
     print("Feching last version\n")
     commands = ([git_path, "fetch", "-v"],
-        [git_path, "stash", "-v"],
+        [git_path, "stash"],
         [git_path, "rebase", "-v"])
     for command in commands:
         proc = Popen(command, stdout=PIPE)
