@@ -55,6 +55,7 @@ class Tkpipe(Frame):
 
 
     def close(self):
+        self.write("\n-----\nProcess ended\n", "blue")
         self.mainloop()
 
 

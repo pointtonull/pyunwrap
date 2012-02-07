@@ -27,9 +27,11 @@ def enqueue_output(out, queue):
 def main():
     "The main routine"
     git_path = get_paths("git")[0]
-    commands = ([git_path, "fetch", "-v"],
+    commands = (
         [git_path, "stash"],
-        [git_path, "rebase", "-v"])
+        [git_path, "fetch", "-v"],
+        [git_path, "rebase", "-v"]
+    )
 
     for command in commands:
         proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
