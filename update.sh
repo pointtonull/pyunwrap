@@ -1,2 +1,2 @@
 #!/bin/sh
-git update
+git pull
