@@ -27,10 +27,22 @@ def get_paths(command):
     """
     return a list of the abspath to executables of <command> except this file
     """
-    my_path = os.path.realpath(__file__)
-    paths = (os.path.realpath(os.path.join(path, command))
-        for path in os.environ["PATH"].split(os.pathsep)
-            if os.path.exists(os.path.join(path, command)))
+    try:
+        my_path = os.path.realpath(__file__)
+    except:
+        my_path = None
+
+    posibles = {
+        "posix" : ["%s"],
+        "nt" : ["%s.exe", "%s.cmd", "%s.com", "%s.bat"]
+        }[os.name]
+    posibles = [pos % command for pos in posibles]
+
+    paths = []
+    for command in posibles:
+        paths += [os.path.realpath(os.path.join(path, command))
+            for path in os.environ["PATH"].split(os.pathsep)
+                if os.path.exists(os.path.join(path, command))]
     paths = [path for path in paths if path != my_path]
     return paths
 
@@ -82,6 +94,7 @@ class Interface(Frame):
         self.txt_messages.insert("end", line)
         self.txt_messages.see("end")
         self.txt_messages.update()
+
 
 
 
