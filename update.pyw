@@ -103,17 +103,10 @@ ERROR: couldt find a valid %s installation
         command = [easy_install_paths[0], line.strip()]
         non_blocking_proc(command)
 
-#    for line in open("easy_install.txt"):
-#        command = [easy_install_paths[0], line.strip()]
-#        non_blocking_proc(command)
-
-
-
-
-
-
-
-
+    pip_paths = get_paths(r"pip")
+    for line in open("pip.txt"):
+        command = [pip_paths[0], "install", line.strip()]
+        non_blocking_proc(command)
 
 
 
