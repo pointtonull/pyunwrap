@@ -100,7 +100,7 @@ ERROR: couldt find a valid %s installation
         non_blocking_proc(command)
 
     for line in open("dependencies.txt"):
-        command = [easy_install_paths[0], line.strip()]
+        command = [easy_install_paths[0], "--quiet", line.strip()]
         non_blocking_proc(command)
 
 
