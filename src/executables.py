@@ -23,6 +23,7 @@ def get_paths(command):
         python_scripts = [path for path in python_scripts
             if os.path.isdir(path)]
         dirs += python_scripts
+        dirs += os.environ["PROGRAMFILES"]
     else:
         raise NotImplementedError("Operative system not recognized.")
     

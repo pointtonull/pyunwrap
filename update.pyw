@@ -27,7 +27,7 @@ def enqueue_output(out, queue):
 
 def main():
     "The main routine"
-    git_paths = get_paths("git")
+    git_paths = get_paths(r"git\cmd\git")
     easy_install_paths = get_paths("easy_install")
 
     error_message = """
