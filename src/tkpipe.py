@@ -2,6 +2,7 @@
 #-*- coding: UTF-8 -*-
 
 from Tkinter import Button, Frame, Label, Text
+import webbrowser
 
 class Tkpipe(Frame):
 
