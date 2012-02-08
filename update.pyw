@@ -64,7 +64,7 @@ def non_blocking_proc(command):
 
 
 def check_module(name, module):
-    sys.stdout.write("    Cheking %s: " % name)
+    sys.stdout.write("    Cheking %s: " % name, "blue")
     try:
         module = __import__(module)
         print "pass"
