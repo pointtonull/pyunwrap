@@ -29,10 +29,12 @@ class Tkpipe(Frame):
         self.rowconfigure(1, minsize=48, weight=1)
         self.txt_messages = Text(self)
         self.txt_messages.grid(row=1, sticky="nsew")
-        self.txt_messages.config(highlightbackground="lightblue")
+#        self.txt_messages.config(highlightbackground="lightblue")
+        self.txt_messages.config(selectbackground="lightblue")
         self.txt_messages.tag_config("green", foreground="darkgreen")
         self.txt_messages.tag_config("blue", foreground="darkblue")
         self.txt_messages.tag_config("red", foreground="darkred")
+#        self.txt_messages.tag_raiseg("sel")
 
         self.rowconfigure(2, minsize=24)
         self.btn_quit = Button(self, text="Quit", command=self.quit)
