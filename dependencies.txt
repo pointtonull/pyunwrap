@@ -1,3 +1,2 @@
 pil
 numpy
-pygame
