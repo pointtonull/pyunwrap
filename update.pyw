@@ -63,6 +63,7 @@ ERROR: couldt find a valid %s installation
     info.wShowWindow = SW_HIDE
 
     for command in commands:
+        print command
         print(" ".join(command))
         proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
             close_fds=False, startupinfo=info)
