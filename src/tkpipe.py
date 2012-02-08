@@ -28,8 +28,7 @@ class Tkpipe(Frame):
 
         self.rowconfigure(1, minsize=48, weight=1)
         self.txt_messages = Text(self)
-        self.txt_messages.grid(row=1, sticky="nsew")
-        self.txt_messages.config(highlightcolor="lightblue")
+        self.txt_messages.grid(row=1, sticky="nsew", highlightcolor="lightblue")
         self.txt_messages.tag_config("green", foreground="darkgreen")
         self.txt_messages.tag_config("blue", foreground="darkblue")
         self.txt_messages.tag_config("red", foreground="darkred")
@@ -43,6 +42,7 @@ class Tkpipe(Frame):
 
 
     def write(self, line, tag=None):
+        line = line.replace("\r\n", "\n")
         self.txt_messages.insert("end", line, tag)
         self.txt_messages.see("end")
         self.txt_messages.update()
