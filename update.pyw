@@ -48,14 +48,14 @@ ERROR: couldt find a valid %s installation
         sys.stderr.write(error_message % "Setup tools\n")
         sys.stderr.write("Starting installer.\n")
         webbrowser.open("")
-        commands = [["src\\setuptools.exe"]]
+        commands = (["src\\setuptools.exe"],)
 
     else:
-        commands = [
-            [git_paths, "stash"],
-            [git_paths, "fetch", "-v"],
-            [git_paths, "rebase", "-v"]
-        ]
+        commands = (
+            [git_paths[0], "stash"],
+            [git_paths[0], "fetch", "-v"],
+            [git_paths[0], "rebase", "-v"]
+        )
 
 
     info = STARTUPINFO()
