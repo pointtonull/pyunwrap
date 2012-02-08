@@ -26,7 +26,7 @@ def get_paths(command):
     else:
         raise NotImplementedError("Operative system not recognized.")
     
-    posibles = [pos % command for ext in exts]
+    posibles = [ext % command for ext in exts]
 
     paths = []
     for command in posibles:
