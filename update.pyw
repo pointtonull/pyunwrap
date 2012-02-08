@@ -45,7 +45,7 @@ ERROR: couldt find a valid %s installation
 
     elif not easy_install_paths:
         sys.stderr.write(error_message % "EASY_INSTALL")
-        sys.stderr.write(error_message % "Starting installer.")
+        sys.stderr.write("Starting installer.")
         webbrowser.open("")
         commands = (["src\\setuptools.exe"])
 
