@@ -74,7 +74,7 @@ def check_module(name, module):
         return False
 
 
-def executable(path):
+def execute(path):
     return non_blocking_proc([path])
 
 
@@ -101,7 +101,7 @@ def pip_install(module):
 def main():
     "The main routine"
 
-    sys.stdout.write("Verifing git:")
+    sys.stdout.write("Verifing git: ")
     git_paths = get_paths(r"git\cmd\git")
     if not git_paths:
         sys.stderr.write("fail\n")
