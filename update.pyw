@@ -26,28 +26,56 @@ def enqueue_output(out, queue):
 
 def main():
     "The main routine"
-    git_path = get_paths("git")[0]
-    commands = (
-        [git_path, "stash"],
-        [git_path, "fetch", "-v"],
-        [git_path, "rebase", "-v"]
-    )
+    git_paths = get_paths("git")
+    easy_install_paths = get_paths("easy_install")
+
+    error_message = """
+----
+ERROR: couldt find a valid %s installation
+
+"""
+
+    if not git_paths:
+        sys.stderr.write(error_message % "GIT")
+        sys.stderr.write("Redirecting to the download webpage.")
+        sys.stderr.write("Download, install and retry please.")
+        webbrowser.open("https://code.google.com/p/msysgit/downloads/detail?"
+            "name=Git-1.7.9-preview20120201.exe")
+        return 1
+
+    elif not easy_install_paths:
+        sys.stderr.write(error_message % "EASY_INSTALL")
+        sys.stderr.write(error_message % "Starting installer.")
+        webbrowser.open("")
+        commands = (["src\\setuptools.exe"])
+
+    else:
+
+        commands = (
+            [git_paths, "stash"],
+            [git_paths, "fetch", "-v"],
+            [git_paths, "rebase", "-v"]
+        )
+
 
     info = STARTUPINFO()
     info.dwFlags |= STARTF_USESHOWWINDOW
     info.wShowWindow = SW_HIDE
 
     for command in commands:
+        print(" ".join(command))
         proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
             close_fds=False, startupinfo=info)
 
         stdout_queue = Queue()
-        stdout = Thread(target=enqueue_output, args=(proc.stdout, stdout_queue))
+        stdout = Thread(target=enqueue_output, args=(proc.stdout,
+            stdout_queue))
         stdout.daemon = True
         stdout.start()
 
         stderr_queue = Queue()
-        stderr = Thread(target=enqueue_output, args=(proc.stderr, stderr_queue))
+        stderr = Thread(target=enqueue_output, args=(proc.stderr,
+            stderr_queue))
         stderr.daemon = True
         stderr.start()
 
