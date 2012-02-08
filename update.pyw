@@ -132,6 +132,8 @@ def main():
     for name, module, method, argument in lines:
         if not check_module(name, module):
             methods[method](argument)
+            return 3
+            
 
 
 if __name__ == "__main__":
