@@ -1,4 +1,0 @@
-pil
-numpy
-scipy
-pygame
