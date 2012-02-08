@@ -75,11 +75,15 @@ def check_module(name, module):
 
 
 def execute(path):
+    sys.stderr.write("""
+*** Executing installer
+*** execute & retry
+""")
     return non_blocking_proc([path])
 
 
 def download(url):
-    print("""
+    sys.stderr.write("""
 *** Fetching installer
 *** execute & retry
 """)
@@ -101,7 +105,7 @@ def pip_install(module):
 def main():
     "The main routine"
 
-    sys.stdout.write("Verifing git: ")
+    sys.stderr.write("Verifing git: ")
     git_paths = get_paths(r"git\cmd\git")
     if not git_paths:
         sys.stderr.write("fail\n")
@@ -127,7 +131,7 @@ def main():
         "pip" : pip_install
     }
 
-    print "\nTesting dependencies:"
+    sys.stderr.write("\nTesting dependencies:\n")
     lines = (line.strip().split(";") for line in open("dependencies.txt"))
     for name, module, method, argument in lines:
         if not check_module(name, module):
