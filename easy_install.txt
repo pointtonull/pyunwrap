@@ -1,4 +1,0 @@
-pip
-pil
-numpy
-scipy

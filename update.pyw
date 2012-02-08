@@ -63,51 +63,75 @@ def non_blocking_proc(command):
     return proc.returncode
 
 
+def check_module(name, module):
+    sys.stdout.write("    Cheking %s: " % name)
+    try:
+        module = __import__(module)
+        print "pass"
+        return module
+    except ImportError:
+        sys.stderr.write("fail\n")
+        return False
+
+
+def executable(path):
+    return non_blocking_proc([path])
+
+
+def download(url):
+    print("""
+*** Fetching installer
+*** execute & retry
+""")
+    return webbrowser.open(url)
+
+
+def easy_install(module):
+    easy_install_paths = get_paths("easy_install")
+    command = [easy_install_paths[0], module]
+    non_blocking_proc(command)
+
+
+def pip_install(module):
+    pip_paths = get_paths(r"pip")
+    command = [pip_paths[0], "install", module]
+    non_blocking_proc(command)
+
+
 def main():
     "The main routine"
 
-    error_message = """
-----
-ERROR: couldt find a valid %s installation
-
-"""
-
+    print "Verifing git:"
     git_paths = get_paths(r"git\cmd\git")
     if not git_paths:
-        sys.stderr.write(error_message % "GIT")
-        sys.stderr.write("Redirecting to the download webpage.\n")
-        sys.stderr.write("Download, install and retry please.\n")
-        webbrowser.open("https://code.google.com/p/msysgit/downloads/detail?"
+        sys.stderr.write("fail\n")
+        download("https://code.google.com/p/msysgit/downloads/detail?"
             "name=Git-1.7.9-preview20120201.exe")
         return 1
-
-    easy_install_paths = get_paths("easy_install")
-    if not easy_install_paths:
-        sys.stderr.write(error_message % "Setup tools\n")
-        sys.stderr.write("Starting installer.\n")
-        webbrowser.open("")
-        commands = (["src\\setuptools.exe"],)
-
     else:
-        commands = [
-            [git_paths[0], "stash"],
-            [git_paths[0], "fetch", "-v"],
-            [git_paths[0], "rebase", "-v"]
-        ]
+        print("pass")
 
+    commands = [
+        [git_paths[0], "stash"],
+        [git_paths[0], "fetch", "-v"],
+        [git_paths[0], "rebase", "-v"]
+    ]
 
-        for command in commands:
-            non_blocking_proc(command)
+    for command in commands:
+        non_blocking_proc(command)
 
-        for line in open("easy_install.txt"):
-            command = [easy_install_paths[0], line.strip()]
-            non_blocking_proc(command)
+    methods = {
+        "executable" : execute,
+        "easy_install" : easy_install,
+        "download" : download,
+        "pip" : pip_install
+    }
 
-        pip_paths = get_paths(r"pip")
-        for line in open("pip.txt"):
-            command = [pip_paths[0], "install", line.strip()]
-            non_blocking_proc(command)
-
+    print "\nTesting dependencies:"
+    lines = (line.strip().split(";") for line in open("dependencies"))
+    for name, module, method, argument in lines:
+        if not check_module(name, module):
+            methods[method](argument)
 
 
 if __name__ == "__main__":
