@@ -27,8 +27,6 @@ def enqueue_output(out, queue):
 
 def main():
     "The main routine"
-    git_paths = get_paths(r"git\cmd\git")
-    easy_install_paths = get_paths("easy_install")
 
     error_message = """
 ----
@@ -36,6 +34,7 @@ ERROR: couldt find a valid %s installation
 
 """
 
+    git_paths = get_paths(r"git\cmd\git")
     if not git_paths:
         sys.stderr.write(error_message % "GIT")
         sys.stderr.write("Redirecting to the download webpage.\n")
@@ -44,7 +43,8 @@ ERROR: couldt find a valid %s installation
             "name=Git-1.7.9-preview20120201.exe")
         return 1
 
-    elif not easy_install_paths:
+    easy_install_paths = get_paths("easy_install")
+    if not easy_install_paths:
         sys.stderr.write(error_message % "Setup tools\n")
         sys.stderr.write("Starting installer.\n")
         webbrowser.open("")
