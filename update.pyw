@@ -99,9 +99,18 @@ ERROR: couldt find a valid %s installation
     for command in commands:
         non_blocking_proc(command)
 
-    for line in open("dependencies.txt"):
+    for line in open("easy_install.txt"):
         command = [easy_install_paths[0], line.strip()]
         non_blocking_proc(command)
+
+#    for line in open("easy_install.txt"):
+#        command = [easy_install_paths[0], line.strip()]
+#        non_blocking_proc(command)
+
+
+
+
+
 
 
 
