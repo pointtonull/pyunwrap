@@ -18,7 +18,7 @@ import webbrowser
 
 
 def enqueue_output(out, queue):
-    for line in iter(out.readline, ''):
+    for line in iter(out.read, ''):
         queue.put(line)
     out.close()
 
