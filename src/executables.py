@@ -31,8 +31,8 @@ def get_paths(command):
 
     paths = []
     for command in posibles:
-        all_paths = (os.path.realpath(os.path.join(dirname, command))
-            for dirname in dirs)
+        all_paths = [os.path.realpath(os.path.join(dirname, command))
+            for dirname in dirs]
         print all_paths
         paths += [path for path in all_paths if os.path.exists(path)]
 
