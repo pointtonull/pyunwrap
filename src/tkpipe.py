@@ -37,7 +37,7 @@ class Tkpipe(Frame):
         self.btn_quit = Button(self, text="Quit", command=self.quit)
         self.btn_quit.grid(row=2, sticky="ew")
 
-        self.write("Process started\n-----", "blue")
+        self.write("Process started\n-----\n", "blue")
         self.update()
 
 
