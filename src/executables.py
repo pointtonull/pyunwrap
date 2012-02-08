@@ -23,20 +23,16 @@ def get_paths(command):
         python_scripts = [path for path in python_scripts
             if os.path.isdir(path)]
         dirs += python_scripts
-        dirs += os.environ["PROGRAMFILES"]
+        dirs.append(os.environ["PROGRAMFILES"])
     else:
         raise NotImplementedError("Operative system not recognized.")
     
     posibles = [ext % command for ext in exts]
 
-    
-    print "\n    ".join(sorted(dirs))
-
     paths = []
     for command in posibles:
         all_paths = [os.path.realpath(os.path.join(dirname, command))
             for dirname in dirs]
-        print "\n    ".join(sorted(all_paths))
         paths += [path for path in all_paths if os.path.exists(path)]
 
     paths = [path for path in paths if path != my_path]
