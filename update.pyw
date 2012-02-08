@@ -51,14 +51,14 @@ def non_blocking_proc(command):
         except Empty:
             pass
         else:
-            sys.stdout.write("  " + line)
+            sys.stdout.write("    " + line)
 
         try:
             line = stderr_queue.get_nowait()
         except Empty:
             pass
         else:
-            sys.stderr.write("  " + line)
+            sys.stderr.write("    " + line)
 
     return proc.returncode
 
