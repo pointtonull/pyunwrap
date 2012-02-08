@@ -51,11 +51,16 @@ ERROR: couldt find a valid %s installation
         commands = (["src\\setuptools.exe"],)
 
     else:
-        commands = (
+        commands = [
             [git_paths[0], "stash"],
             [git_paths[0], "fetch", "-v"],
             [git_paths[0], "rebase", "-v"]
-        )
+        ]
+
+
+        for line in open("dependencies.txt"):
+            commands.append([easy_install_paths[0], line.strip()])
+
 
 
     info = STARTUPINFO()
