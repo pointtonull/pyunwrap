@@ -38,20 +38,19 @@ ERROR: couldt find a valid %s installation
 
     if not git_paths:
         sys.stderr.write(error_message % "GIT")
-        sys.stderr.write("Redirecting to the download webpage.")
-        sys.stderr.write("Download, install and retry please.")
+        sys.stderr.write("Redirecting to the download webpage.\n")
+        sys.stderr.write("Download, install and retry please.\n")
         webbrowser.open("https://code.google.com/p/msysgit/downloads/detail?"
             "name=Git-1.7.9-preview20120201.exe")
         return 1
 
     elif not easy_install_paths:
-        sys.stderr.write(error_message % "EASY_INSTALL")
-        sys.stderr.write("Starting installer.")
+        sys.stderr.write(error_message % "EASY_INSTALL\n")
+        sys.stderr.write("Starting installer.\n")
         webbrowser.open("")
-        commands = (["src\\setuptools.exe"])
+        commands = (["src\\setuptools.exe"],)
 
     else:
-
         commands = (
             [git_paths, "stash"],
             [git_paths, "fetch", "-v"],
