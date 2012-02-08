@@ -1,2 +1,4 @@
+pil
+numpy
 scipy
 pygame
