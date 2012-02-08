@@ -60,7 +60,7 @@ def non_blocking_proc(command):
         else:
             sys.stderr.write("  " + line)
 
-    return proc.retuncode
+    return proc.returncode
 
 
 def main():
