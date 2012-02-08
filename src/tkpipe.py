@@ -37,7 +37,7 @@ class Tkpipe(Frame):
         self.btn_quit = Button(self, text="Quit", command=self.quit)
         self.btn_quit.grid(row=2, sticky="ew")
 
-        self.write("-----\nProcess started", "blue")
+        self.write("Process started\n-----", "blue")
         self.update()
 
 
@@ -58,7 +58,7 @@ class Tkpipe(Frame):
 
     def close(self):
         if not self.closed:
-            self.write("Process ended\n-----\n\n", "blue")
+            self.write("-----\nProcess ended", "blue")
             self.closed = True
             self.mainloop()
 
