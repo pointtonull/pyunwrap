@@ -45,17 +45,17 @@ ERROR: couldt find a valid %s installation
         return 1
 
     elif not easy_install_paths:
-        sys.stderr.write(error_message % "EASY_INSTALL\n")
+        sys.stderr.write(error_message % "Setup tools\n")
         sys.stderr.write("Starting installer.\n")
         webbrowser.open("")
-        commands = (["src\\setuptools.exe"],)
+        commands = [["src\\setuptools.exe"]]
 
     else:
-        commands = (
+        commands = [
             [git_paths, "stash"],
             [git_paths, "fetch", "-v"],
             [git_paths, "rebase", "-v"]
-        )
+        ]
 
 
     info = STARTUPINFO()
