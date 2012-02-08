@@ -101,7 +101,7 @@ def pip_install(module):
 def main():
     "The main routine"
 
-    sys.stderr.write("Verifing git: ")
+    sys.stderr.write("Verifing git: ", "blue")
     git_paths = get_paths(r"git\cmd\git")
     if not git_paths:
         sys.stderr.write("fail\n")
