@@ -4,7 +4,7 @@
 import os
 import sys
 
-if os.name in ("nt", "posix"):
+if os.name in ("nt"):
     import tkpipe
     pipe = tkpipe.Tkpipe()
     sys.stdout = pipe.default("green")
