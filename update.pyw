@@ -105,7 +105,7 @@ ERROR: couldt find a valid %s installation
 
         pip_paths = get_paths(r"pip")
         for line in open("pip.txt"):
-            command = [pip_paths[0], "install", line.strip()]
+            command = [pip_paths[0], "install", "--quiet", line.strip()]
             non_blocking_proc(command)
 
 
