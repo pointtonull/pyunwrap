@@ -16,13 +16,47 @@ from threading  import Thread
 import sys
 import webbrowser
 
-assert 'posix' not in sys.builtin_module_names
-
 
 def enqueue_output(out, queue):
     for line in iter(out.readline, ''):
         queue.put(line)
     out.close()
+
+
+def non_blocking_proc(command):
+    sys.stderr.write("» Launch: %s\n" % (" ".join(command)).lower())
+    proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
+        close_fds=False, startupinfo=info)
+
+    stdout_queue = Queue()
+    stdout = Thread(target=enqueue_output, args=(proc.stdout,
+        stdout_queue))
+    stdout.daemon = True
+    stdout.start()
+
+    stderr_queue = Queue()
+    stderr = Thread(target=enqueue_output, args=(proc.stderr,
+        stderr_queue))
+    stderr.daemon = True
+    stderr.start()
+
+    while proc.poll() is None:
+
+        try:
+            line = stdout_queue.get_nowait()
+        except Empty:
+            pass
+        else:
+            sys.stdout.write("  " + line)
+
+        try:
+            line = stderr_queue.get_nowait()
+        except Empty:
+            pass
+        else:
+            sys.stderr.write("  " + line)
+
+    return proc.retuncode
 
 
 def main():
@@ -58,47 +92,20 @@ ERROR: couldt find a valid %s installation
         ]
 
 
-        for line in open("dependencies.txt"):
-            commands.append([easy_install_paths[0], line.strip()])
-
-
-
     info = STARTUPINFO()
     info.dwFlags |= STARTF_USESHOWWINDOW
     info.wShowWindow = SW_HIDE
 
     for command in commands:
-        print("» Launch: %s" % (" ".join(command)).lower())
-        proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
-            close_fds=False, startupinfo=info)
+        non_blocking_proc(command)
 
-        stdout_queue = Queue()
-        stdout = Thread(target=enqueue_output, args=(proc.stdout,
-            stdout_queue))
-        stdout.daemon = True
-        stdout.start()
+    for line in open("dependencies.txt"):
+        command = [easy_install_paths[0], "--upgrade", line.strip()]
+        non_blocking_proc(command)
 
-        stderr_queue = Queue()
-        stderr = Thread(target=enqueue_output, args=(proc.stderr,
-            stderr_queue))
-        stderr.daemon = True
-        stderr.start()
 
-        while proc.poll() is None:
 
-            try:
-                line = stdout_queue.get_nowait()
-            except Empty:
-                pass
-            else:
-                sys.stdout.write("  " + line)
 
-            try:
-                line = stderr_queue.get_nowait()
-            except Empty:
-                pass
-            else:
-                sys.stderr.write("  " + line)
 
 
 if __name__ == "__main__":
