@@ -75,15 +75,13 @@ def check_module(name, module):
 
 
 def execute(path):
-    sys.stderr.write("""
-***     Executing installer
+    sys.stderr.write("""***     Executing installer
 ***     execute & retry""")
     return non_blocking_proc([path])
 
 
 def download(url):
-    sys.stderr.write("""
-***     Fetching installer
+    sys.stderr.write("""***     Fetching installer
 ***     execute & retry""")
     return webbrowser.open(url)
 
