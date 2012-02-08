@@ -24,7 +24,11 @@ def enqueue_output(out, queue):
 
 
 def non_blocking_proc(command):
-    sys.stderr.write("» Launch: %s\n" % (" ".join(command)).lower())
+    sys.stderr.write("» Launch: %s\n" % (" ".join(command)).lower(), "blue")
+    info = STARTUPINFO()
+    info.dwFlags |= STARTF_USESHOWWINDOW
+    info.wShowWindow = SW_HIDE
+
     proc = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=1,
         close_fds=False, startupinfo=info)
 
@@ -91,10 +95,6 @@ ERROR: couldt find a valid %s installation
             [git_paths[0], "rebase", "-v"]
         ]
 
-
-    info = STARTUPINFO()
-    info.dwFlags |= STARTF_USESHOWWINDOW
-    info.wShowWindow = SW_HIDE
 
     for command in commands:
         non_blocking_proc(command)
