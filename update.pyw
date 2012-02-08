@@ -128,7 +128,7 @@ def main():
     }
 
     print "\nTesting dependencies:"
-    lines = (line.strip().split(";") for line in open("dependencies"))
+    lines = (line.strip().split(";") for line in open("dependencies.txt"))
     for name, module, method, argument in lines:
         if not check_module(name, module):
             methods[method](argument)
