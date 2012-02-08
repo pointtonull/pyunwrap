@@ -1,3 +1,4 @@
 pil
 numpy
 scipy
+pip
