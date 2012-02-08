@@ -14,6 +14,7 @@ from src.executables import get_paths
 from subprocess import Popen, PIPE, STARTUPINFO, SW_HIDE, STARTF_USESHOWWINDOW
 from threading  import Thread
 import sys
+import webbrowser
 
 assert 'posix' not in sys.builtin_module_names
 
