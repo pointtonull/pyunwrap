@@ -10,7 +10,6 @@ fmt = fft(lp_ft_magnitude)
 """
 
 from numpy import pi, arctan2, sqrt, sin, tan, tan, log, log10, cos, exp, zeros, floor
-from math import atan
 from scipy import ndimage
 import Image
 import numpy
@@ -59,46 +58,21 @@ def logpolar(input):
 
 
 
-def arctan(x, y):
-    r'''
-    Returns the arc tangent at the point (x, y), in radians.
-
-    This functuion defines the arc tangent as the angle between the line
-    segment [(0,0), (x, y)] and the x-axis, always measured in the
-    counter-clockwise direction. This is different from Python's math.atan()
-    function, which works in the range [-0.5*pi, 0.5*pi].
-
-    Because the tangent function is undefined for points over the y-axis,
-    and always zero por points over the x-axis, the following conventions
-    have been established for those cases:
-
-    * Points over the x-axis have an arc tangent value of zero for all
-      non-negative values of x, and value pi for all negative values;
-
-    * Points over the y-axis have an arc tangent value of 0.5*pi for all
-      non-negative values of y, and 1.5*pi for all negative values.
-
-    Also, it should be noted that it is not possible to obtain an arc
-    tangent of value 2*pi, since it would mean a full circle back into the
-    positive x-axis - and the zero value has already been conventioned for
-    that region.
-    '''
-
-    if y == 0:
-        return 0 if x >= 0 else pi
-    elif x == 0:
-        return 0.5 * pi if y >= 0 else 1.5 * pi
-
-    r = atan(abs(y / x))
-
-    if x > 0 and y > 0:
-        return r
-    elif x < 0 and y > 0:
-        return pi - r
-    elif x < 0 and y < 0:
-        return pi + r
-    else:
-        return 2 * pi - r
+#def arctan(x, y):
+##    return arctan2(x, y)
+#    if y == 0:
+#        return 0 if x >= 0 else pi
+#    elif x == 0:
+#        return 0.5 * pi if y >= 0 else 1.5 * pi
+#    r = atan(abs(y / float(x)))
+#    if x > 0 and y > 0:
+#        return r
+#    elif x < 0 and y > 0:
+#        return pi - r
+#    elif x < 0 and y < 0:
+#        return pi + r
+#    else:
+#        return 2 * pi - r
 
 
 def max_rho(array, x0=None, y0=None):
@@ -125,7 +99,7 @@ def fovea(array, t):
         w = len(pixels)
         if w >= n:
             break
-        ratio = int((w << 16) / n)
+        ratio = int((w << 16) / float(n))
         for phi in range(0, n):
             k = (phi * ratio) >> 16
             array[rho, phi] = pixels[k]
@@ -164,7 +138,7 @@ def transform(array, origin=None, a=None, b=None, M=None):
             yt = float(y - y0)
             r = rnor * (xt ** 2.0 + yt ** 2.0) ** .5
             rho = int(floor(M * log(r + a) - b))
-            phi = int(floor(n * arctan(xt, yt) / (2 * pi)))
+            phi = int(floor(n * arctan2(xt, yt) / (2 * pi)))
             t[rho, phi] += 1.0
             polar[rho, phi] += int((array[y, x] - polar[rho, phi]) / t[rho,
                 phi])
