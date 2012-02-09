@@ -18,11 +18,12 @@ import sys
 
 tau = 2 * pi
 
-def logpolar(array):
+def logpolar(array, scale=1):
     rows, cols = array.shape
-    out_rows, out_cols = rows, cols
-    row0 = out_rows / 2.
-    col0 = out_cols / 2.
+    out_rows = rows * scale
+    out_cols = cols * scale
+    row0 = rows / 2.
+    col0 = cols / 2.
     rho_scalar = 2 * exp(1) / out_rows
     theta_scalar = tau / out_cols
 
@@ -41,8 +42,8 @@ def main():
     image = Image.open(sys.argv[1])
     image = image.convert("L")
     array = numpy.array(image)
-    array = logpolar(array)
-    Image.fromarray(array).show()
+    array = logpolar(array, 4)
+    Image.fromarray(array).show(sys.argv[1], "mspaint")
 
 if __name__ == "__main__":
     exit(main())
