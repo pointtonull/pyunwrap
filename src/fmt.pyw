@@ -37,19 +37,20 @@ def logpolar(array, scale=1):
 
     return geometric_transform(array, out2in, (out_rows, out_cols), order=3)
 
-
+image = ""
 def main():
     import autopipe
     filename = sys.argv[1]
     print("Openning image file: %s" % filename)
     image = Image.open(filename)
     image = image.convert("L")
+    sys.stdout.writeimage(image)
     print("Transforming to log polar")
     array = numpy.array(image)
-    array = logpolar(array, 4)
+    array = logpolar(array, 1)
     print("Displaying")
-    sys.stdout.pipe.txt_messages.image_create("end", {"image" :Image.fromarray(array)})
-#    Image.fromarray(array).show(sys.argv[1])
+    image = Image.fromarray(array)
+    sys.stdout.writeimage(image)
 
 if __name__ == "__main__":
     exit(main())
