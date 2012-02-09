@@ -39,11 +39,16 @@ def logpolar(array, scale=1):
 
 
 def main():
-    image = Image.open(sys.argv[1])
+    import autopipe
+    filename = sys.argv[1]
+    print("Openning image file: %s" % filename)
+    image = Image.open(filename)
     image = image.convert("L")
+    print("Transforming to log polar")
     array = numpy.array(image)
     array = logpolar(array, 4)
-    Image.fromarray(array).show(sys.argv[1], "mspaint")
+    print("Displaying")
+    Image.fromarray(array).show(sys.argv[1])
 
 if __name__ == "__main__":
     exit(main())
