@@ -209,10 +209,11 @@ def main():
     image = image.convert("L")
     image.show()
     array = numpy.array(image)
-    polar1 = transform(array)
-    polar2 = array_car2logpol(array)
 
-    Image.fromarray(polar1).show()
+#    polar1 = transform(array)
+#    Image.fromarray(polar1).show()
+
+    polar2 = array_car2logpol(array)
     Image.fromarray(polar2).show()
 
 if __name__ == "__main__":
