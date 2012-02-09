@@ -207,14 +207,15 @@ def main():
 
     image = Image.open(sys.argv[1])
     image = image.convert("L")
-    image.show()
     array = numpy.array(image)
+
+#    image.show()
 
     polar1 = transform(array)
     Image.fromarray(polar1).show()
 
-    polar2 = array_car2logpol(array)
-    Image.fromarray(polar2).show()
+#    polar2 = array_car2logpol(array)
+#    Image.fromarray(polar2).show()
 
 if __name__ == "__main__":
     exit(main())
