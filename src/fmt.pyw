@@ -48,7 +48,8 @@ def main():
     array = numpy.array(image)
     array = logpolar(array, 4)
     print("Displaying")
-    Image.fromarray(array).show(sys.argv[1])
+    sys.stdout.pipe.txt_messages.image_create("end", Image.fromarray(array))
+#    Image.fromarray(array).show(sys.argv[1])
 
 if __name__ == "__main__":
     exit(main())
