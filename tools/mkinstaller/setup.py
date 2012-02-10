@@ -10,7 +10,7 @@ setup(
             "py2exe":{
                 "unbuffered": True,
                 "optimize": 2,
-                "include": ["src"]
+                "includes": ["src"]
             }
         }
 )
