@@ -2,5 +2,6 @@ Setup Tools;setuptools;executable;tools\setuptools.exe
 Python Package Index;pip;easy_install;pip
 Python Imaging Library;Image;easy_install;pil
 NumPy;numpy;easy_install;pil
+Py2exe;py2exe;download;http://ufpr.dl.sourceforge.net/project/py2exe/py2exe/0.6.9/py2exe-0.6.9.win32-py2.7.exe
 SciPy;scipy;download;http://ufpr.dl.sourceforge.net/project/scipy/scipy/0.10.0/scipy-0.10.0-win32-superpack-python2.7.exe
 PyGame;pygame;download;http://pygame.org/ftp/pygame-1.9.1.win32-py2.7.msi
