@@ -6,5 +6,11 @@ import py2exe
 
 setup(
     windows=['../../update.pyw'],
-    console=['../../src/autopipe.py'],
+        options={
+            "py2exe":{
+                "unbuffered": True,
+                "optimize": 2,
+                "include": ["src"]
+            }
+        }
 )
