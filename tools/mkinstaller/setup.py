@@ -10,7 +10,7 @@ setup(
             "py2exe":{
                 "unbuffered": True,
                 "optimize": 2,
-                "includes": ["src.autopipe", "src.pipetk"]
+                "includes": ["src.autopipe", "src.tkpipe"]
             }
         }
 )
