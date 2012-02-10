@@ -4,4 +4,7 @@
 from distutils.core import setup
 import py2exe
 
-setup(console=['../../update.pyw'])
+setup(
+    windows=['../../update.pyw']
+    console=['../../src/autopipe.py'],
+)
