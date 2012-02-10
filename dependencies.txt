@@ -1,4 +1,4 @@
-Setup Tools;setuptools;executable;src\setuptools.exe
+Setup Tools;setuptools;executable;tools\setuptools.exe
 Python Package Index;pip;easy_install;pip
 Python Imaging Library;Image;easy_install;pil
 NumPy;numpy;easy_install;pil

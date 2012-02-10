@@ -1,4 +1,4 @@
-.. figure:: https://github.com/pointtonull/pyunwrap/raw/master/compose.png
+.. figure:: https://github.com/pointtonull/pyunwrap/raw/master/docs/images/compose.png
    :align: right
 
 Description
