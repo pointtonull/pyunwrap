@@ -98,24 +98,40 @@ def pip_install(module):
     non_blocking_proc(command)
 
 
+def message(text, color="blue"):
+    return sys.stderr.write(text, color)
+
+
 def main():
     "The main routine"
 
-    sys.stderr.write("Verifing git: ", "blue")
+    message("Verifing git: ")
     git_paths = get_paths(r"git\cmd\git")
-    if not git_paths:
-        sys.stderr.write("fail\n")
-        download("https://code.google.com/p/msysgit/downloads/detail?"
-            "name=Git-1.7.9-preview20120201.exe")
-        return 1
-    else:
+    if git_paths:
         print("pass")
+    else:
+        message("fail\n", "red")
+        download("http://msysgit.googlecode.com/files/"
+            "Git-1.7.9-preview20120201.exe")
+        return 1
 
-    commands = [
+    message("Verifing valid repository: ")
+    if os.path.isdir(".git"):
+        print("pass")
+    else:
+        message("fail\n", "red")
+        message("Attempting to clone the repository at the current location\n"
+            "blue")
+        non_blocking_proc([git_paths[0], "clone",
+            "git://github.com/pointtonull/pyunwrap.git"])
+        message("""\n\nMust execute "update.pyw".""")
+        return
+
+    commands = (
         [git_paths[0], "stash"],
         [git_paths[0], "fetch", "-v"],
         [git_paths[0], "rebase", "-v"]
-    ]
+    )
 
     for command in commands:
         non_blocking_proc(command)
