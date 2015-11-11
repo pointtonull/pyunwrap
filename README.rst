@@ -7,6 +7,13 @@ Description
 PyUnwrap is a very efficient phase unwrapper with a nice python/mayavi2
 interface.
 
+This code adopts 2D and 3D phase-field unwrapping routines originally
+written by Munther Gdeisat and adapted to Python as part of the Recon
+Tools project from the Brain Imaging Center at University of
+California, Berkeley.
+
+https://github.com/matthew-brett/recon-tools
+
 Colaborate
 ========
 
